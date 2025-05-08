@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('beasiswas', function (Blueprint $table) {
+        Schema::create('lowongan_kerja', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->string('judul');
+            $table->string('jenis'); // Full-time, Magang, Freelance
+            $table->string('lokasi');
+            $table->string('perusahaan');
             $table->text('deskripsi');
-            $table->json('tingkats')->nullable(); 
+            $table->string('link_detail')->nullable();
             $table->date('deadline')->nullable();
-            $table->string('link')->nullable();
-            $table->string('gambar')->nullable();
             $table->timestamps();
         });
-        
         
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('beasiswa');
+        Schema::dropIfExists('lowongan_kerja');
     }
 };

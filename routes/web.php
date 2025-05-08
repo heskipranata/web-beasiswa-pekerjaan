@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BeasiswaController;
+use App\Http\Controllers\LowonganKerjaController;
+
+
+
 
 
 
@@ -21,7 +25,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-
 Route::get('/beasiswa', [BeasiswaController::class, 'index'])->name('beasiswa.index');
 
+Route::get('/pekerjaan', [LowonganKerjaController::class, 'index'])->name('pekerjaan.index');
 
