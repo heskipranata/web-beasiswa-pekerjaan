@@ -133,7 +133,8 @@
                             Manado dan sekitarnya. Lihat persyaratan, manfaat, dan cara
                             melamar untuk membangun karier yang gemilang.
                         </p>
-                        <a href="job.html" class="btn btn-primary fw-semibold px-4 py-2 mt-3 rounded-1 hover-btn">
+                        <a href="{{ route('pekerjaan.index') }}"
+                            class="btn btn-primary fw-semibold px-4 py-2 mt-3 rounded-1 hover-btn">
                             Cari Lowongan
                         </a>
                     </div>
