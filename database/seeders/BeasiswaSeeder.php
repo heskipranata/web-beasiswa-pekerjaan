@@ -35,6 +35,22 @@ class BeasiswaSeeder extends Seeder
                 'deskripsi' => 'Ditujukan bagi siswa dan mahasiswa diploma yang berprestasi namun terkendala biaya.',
                 'link' => 'https://youthspaceinnovation.com/',
                 'gambar' => asset('images/bcm.jpg'),
+            ],
+            [
+                'nama' => 'Beasiswa Mahasiswa Berprestasi Akademik',
+                'tingkats' => json_encode(['D3']),
+                'deadline' => null,
+                'deskripsi' => 'Beasiswa akademik bagi mahasiswa berprestasi di Poltekkes Manado',
+                'link' => 'https://official.poltekkes-manado.ac.id/beasiswa/detail/beasiswa-program-bidik-misi-poltekkes-manado',
+                'gambar' => 'https://official.poltekkes-manado.ac.id/storage/scholarship/WUDnruG1yAUebvhQFCRWL6azBk3MpmSwvqyPAUmR.png',
+            ],
+            [
+                'nama' => 'Djarum Beasiswa Plus',
+                'tingkats' => json_encode(['Sarjana-1']),
+                'deadline' => '2025-07-11',
+                'deskripsi' => 'Program beasiswa bagi mahasiswa di perguruan tinggi negeri dan swasta yang memiliki kerja sama dengan Djarum Foundation',
+                'link' => 'https://djarumbeasiswaplus.org/tentang_kami/persyaratan-untuk-menjadi-penerima-program-djarum-beasiswa-plus?utm_source=chatgpt.com',
+                'gambar' => 'https://djarumbeasiswaplus.org/assets/media/1522298726_Tentang%20Kami%20-%20Tentang%20DBP_preview.jpg',
             ]
         ];
 
