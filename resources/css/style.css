@@ -1,0 +1,64 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
+  .bg-gray{
+    background-color: #edf0f3fa !important;
+  }
+  
+  .hover-btn:hover {
+    background-color: white;
+    color: #0d6efd;
+    border: 2px solid #0d6efd;
+  }
+  
+  .hover-btn-white:hover{
+    background-color: #0d6efd;
+    color: white !important;
+    border: 2px solid white;
+  }
+  
+  .hover-blue:hover{
+    color: #0d6efd !important;
+  }
+  
+  .hover-black:hover{
+    color: #111111 !important;
+  }
+  
+  .hover-border-blue:hover{
+    border-color:  #0d6efd !important;
+  }
+  
+  .hover-bg-blue:hover {
+    background-color: #0d6efd !important;
+    color: white !important; /* opsional, agar teks tetap terbaca */
+  }
+  
+  .overlay-dark {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .fluid-text {
+    font-size: clamp(0.9rem, 2.5vw, 1.25rem);
+  }
+  
+  .top-spacing-md {
+    margin-top: 7rem;
+  }
+  
+  @media (min-width: 769px) {
+    .top-spacing-md {
+      margin-top: 10rem;
+    }
+  }
+  .login-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  
