@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
-     Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -30,10 +30,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/beasiswa', [BeasiswaController::class, 'adminIndex'])->name('admin.beasiswa');
     Route::get('/beasiswa', [BeasiswaController::class, 'adminIndex'])->name('beasiswa.index');
-    Route::get('/beasiswa/create', [BeasiswaController::class, 'create'])->name('beasiswa.create');
-    Route::post('/beasiswa', [BeasiswaController::class, 'store'])->name('beasiswa.store');
+    Route::get('/admin/beasiswa/create', [BeasiswaController::class, 'create'])->name('beasiswa.create');
+    Route::post('admin/beasiswa/store', [BeasiswaController::class, 'store'])->name('beasiswa.store');
+    Route::put('/admin/beasiswa/{id}', [BeasiswaController::class, 'update'])->name('beasiswa.update');
+    Route::delete('/admin/beasiswa/{id}', [BeasiswaController::class, 'destroy'])->name('beasiswa.destroy');
+
+
 
     Route::get('/admin/pekerjaan', [LowonganKerjaController::class, 'adminIndex'])->name('admin.pekerjaan');
+    Route::post('/pekerjaan/store', [LowonganKerjaController::class, 'store'])->name('pekerjaan.store');
+    Route::put('/pekerjaan/{id}', [LowonganKerjaController::class, 'update'])->name('pekerjaan.update');
+    Route::delete('/pekerjaan/{id}', [LowonganKerjaController::class, 'destroy'])->name('pekerjaan.destroy');
 });
 
 Route::get('/beasiswa', [BeasiswaController::class, 'index'])->name('beasiswa.index');

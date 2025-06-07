@@ -47,7 +47,7 @@
                         <li><a class="dropdown-item category-filter" href="#" data-category="SMA">SMA</a></li>
                         <li><a class="dropdown-item category-filter" href="#"
                                 data-category="Sarjana-1">Sarjana-1</a></li>
-                        <li><a class="dropdown-item category-filter" href="#" data-category="S2">S2</a></li>
+                        <li><a class="dropdown-item category-filter" href="#" data-category="S2">Magister</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,7 +56,7 @@
             <div class="row g-4">
                 @foreach ($beasiswas as $beasiswa)
                     <div class="col-md-6 col-lg-4 scholarship-card"
-                    data-category="{{ implode(' ', json_decode($beasiswa['tingkats'], true)) }}">
+                        data-category="{{ implode(' ', json_decode($beasiswa['tingkats'], true)) }}">
                         <div class="card h-100 shadow-sm">
                             <div class="ratio ratio-16x9">
                                 <img src="{{ $beasiswa['gambar'] }}" class="card-img-top object-fit-cover"
@@ -65,17 +65,32 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title fw-bold">{{ $beasiswa['nama'] }}</h5>
                                 <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                    @php
+                                        $badgeColors = [
+                                            'SMA' => 'bg-primary text-dark',
+                                            'D3' => 'bg-success text-dark',
+                                            'Sarjana-1' => 'bg-warning ',
+                                            'Magister' => 'bg-danger text-dark',
+                                            'S2' => 'bg-danger', 
+                                        ];
+                                    @endphp
+
                                     @foreach (json_decode($beasiswa['tingkats'], true) as $tingkat)
-                                        <span class="badge bg-info text-dark rounded-4">{{ $tingkat }}</span>
+                                        <span
+                                            class="badge {{ $badgeColors[$tingkat] ?? 'bg-secondary' }} text-black rounded-4">
+                                            {{ $tingkat }}
+                                        </span>
                                     @endforeach
-                                
+
+
                                     @if ($beasiswa['deadline'])
                                         <span class="badge bg-warning text-dark rounded-4">
-                                            Deadline: {{ \Carbon\Carbon::parse($beasiswa['deadline'])->translatedFormat('d F Y') }}
+                                            Deadline:
+                                            {{ \Carbon\Carbon::parse($beasiswa['deadline'])->translatedFormat('d F Y') }}
                                         </span>
                                     @endif
                                 </div>
-                                
+
                                 <p class="card-text flex-grow-1">{{ $beasiswa['deskripsi'] }}</p>
                                 <a href="{{ $beasiswa['link'] }}" class="btn btn-primary mt-auto" target="_blank">
                                     Selengkapnya <i class="fas fa-up-right-from-square ms-2"></i>
@@ -89,6 +104,32 @@
         </div>
     </main>
     @include('partials.footer')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterLinks = document.querySelectorAll('.category-filter');
+            const cards = document.querySelectorAll('.scholarship-card');
+
+            filterLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const category = this.getAttribute('data-category');
+
+                    cards.forEach(card => {
+                        const cardCategories = card.getAttribute('data-category').split(
+                        ' ');
+
+                        if (category === 'all' || cardCategories.includes(category)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>

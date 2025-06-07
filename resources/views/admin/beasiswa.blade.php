@@ -26,10 +26,25 @@
                             <td>{{ $beasiswa->nama }}</td>
                             <td>
                                 <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                    @php
+                                        $colorMap = [
+                                            'SMA' => 'primary',
+                                            'D3' => 'success',
+                                            'Sarjana-1' => 'warning',
+                                            'Magister' => 'danger',
+                                            'Doktor' => 'secondary',
+                                        ];
+                                    @endphp
+
                                     @foreach (json_decode($beasiswa->tingkats, true) as $tingkat)
-                                        <span class="badge bg-info text-dark rounded-4">{{ $tingkat }}</span>
+                                        @php
+                                            $badgeColor = $colorMap[$tingkat] ?? 'info';
+                                        @endphp
+                                        <span
+                                            class="badge bg-{{ $badgeColor }} text-black rounded-4">{{ $tingkat }}</span>
                                     @endforeach
                                 </div>
+
                             </td>
 
                             <td>{{ \Carbon\Carbon::parse($beasiswa->deadline)->format('d M Y') }}</td>
@@ -67,18 +82,22 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">
-                                                Edit <i class="bi bi-pencil-square ms-2"></i>
+                                            <a class="btn" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#editBeasiswaModal{{ $beasiswa->id }}">
+                                                Edit
                                             </a>
                                         </li>
                                         <li>
-                                            <form method="POST" action="#">
+                                            <form action="{{ route('beasiswa.destroy', $beasiswa->id) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('Yakin ingin menghapus beasiswa ini?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="dropdown-item text-danger">
                                                     Hapus <i class="bi bi-trash-fill ms-2"></i>
                                                 </button>
                                             </form>
+
                                         </li>
                                     </ul>
                                 </div>
@@ -92,50 +111,122 @@
 
     <div class="modal fade" id="tambahBeasiswaModal" tabindex="-1" aria-labelledby="tambahBeasiswaLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="tambahBeasiswaLabel">Tambah Beasiswa Baru</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-sm">
+                <form action="{{ route('beasiswa.store') }}" method="POST" enctype="multipart/form-data" novalidate>
+                    @csrf
+
+                    <div class="modal-header bg-primary text-white">
+                        <h4 class="modal-title" id="tambahBeasiswaLabel">
+                            <i class="bi bi-award me-2"></i>Tambah Beasiswa Baru
+                        </h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Tutup"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="judulBeasiswa" class="form-label">Judul Beasiswa</label>
-                            <input type="text" class="form-control" id="judulBeasiswa" required />
+
+                    <div class="modal-body mx-2">
+
+                        <div class="mb-4">
+                            <label for="judulBeasiswa" class="form-label fw-semibold text-success">Judul Beasiswa <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="judulBeasiswa" name="nama"
+                                placeholder="Masukkan judul beasiswa" required>
+                            <div class="invalid-feedback">Judul beasiswa wajib diisi.</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="jenjangBeasiswa" class="form-label">Jenjang</label>
-                            <select class="form-select" id="jenjangBeasiswa" required>
-                                <option value="">Pilih jenjang</option>
-                                <option value="D3">D3</option>
-                                <option value="S1">Sarjana-1</option>
-                                <option value="S2">Magister</option>
-                                <option value="S3">Doktor</option>
-                            </select>
+
+                        <fieldset class="mb-4">
+                            <p class="form-label fw-semibold mb-2 text-success">Jenjang <span
+                                    class="text-danger">*</span>
+                            </p>
+                            <div class="d-flex flex-wrap gap-3">
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="jenjangSMA" name="tingkats[]"
+                                        value="SMA">
+                                    <label class="form-check-label" for="jenjangSMA">SMA</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="jenjangD3" name="tingkats[]"
+                                        value="D3">
+                                    <label class="form-check-label" for="jenjangD3">D3</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="jenjangS1" name="tingkats[]"
+                                        value="S1">
+                                    <label class="form-check-label" for="jenjangS1">Sarjana-1</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="jenjangS2" name="tingkats[]"
+                                        value="S2">
+                                    <label class="form-check-label" for="jenjangS2">Magister</label>
+                                </div>
+
+
+                            </div>
+                            <div class="invalid-feedback d-block" id="tingkatsFeedback" style="display:none;">Pilih
+                                minimal satu jenjang.</div>
+                        </fieldset>
+
+                        <div class="mb-4">
+                            <label for="deadlineBeasiswa" class="form-label fw-semibold text-success">Deadline</label>
+                            <input type="date" class="form-control" id="deadlineBeasiswa" name="deadline"
+                                required>
+                            <div class="invalid-feedback">Deadline wajib diisi dan harus berupa tanggal yang valid.
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="deadlineBeasiswa" class="form-label">Deadline</label>
-                            <input type="date" class="form-control" id="deadlineBeasiswa" required />
+
+                        <div class="mb-4">
+                            <label for="deskripsiBeasiswa" class="form-label fw-semibold text-success">Deskripsi <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" id="deskripsiBeasiswa" name="deskripsi" rows="4"
+                                placeholder="Deskripsikan beasiswa secara singkat" required></textarea>
+                            <div class="invalid-feedback">Deskripsi wajib diisi.</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="deskripsiBeasiswa" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsiBeasiswa" rows="3" required></textarea>
+
+                        <div class="mb-4 p-3 bg-light rounded-3 border">
+                            <h6 class="fw-semibold mb-3 text-success">Gambar (Opsional)</h6>
+
+                            <div class="mb-3">
+                                <label for="gambarLink" class="form-label">Link Gambar</label>
+                                <input type="url" class="form-control" id="gambarLink" name="gambar_link"
+                                    placeholder="https://contoh.com/image.jpg">
+                            </div>
+
+                            <div class="mb-0">
+                                <label for="gambarUpload" class="form-label">Upload Gambar</label>
+                                <input type="file" class="form-control" id="gambarUpload" name="gambar_file"
+                                    accept="image/*">
+                            </div>
+
+                            <small class="text-muted fst-italic mt-2 d-block">Anda dapat mengisi salah satu dari link
+                                atau upload gambar.</small>
                         </div>
+
                         <div class="mb-3">
-                            <label for="linkBeasiswa" class="form-label">Link Selengkapnya</label>
-                            <input type="url" class="form-control" id="linkBeasiswa"
-                                placeholder="https://contoh.com" />
+                            <label for="linkBeasiswa" class="form-label fw-semibold text-success">Link
+                                Selengkapnya</label>
+                            <input type="url" class="form-control" id="linkBeasiswa" name="link"
+                                placeholder="https://contoh.com">
                         </div>
+
                     </div>
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Batal
-                        </button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary px-4">Simpan</button>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
+
+    @foreach ($beasiswas as $beasiswa)
+        @include('partials.edit-modal', ['beasiswa' => $beasiswa])
+    @endforeach
+
 </x-admin-layout>
