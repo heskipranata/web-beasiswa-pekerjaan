@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pendidikans', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama'); // contoh: SMA, S1, S2
-            $table->timestamps();
-        });
-        
+        Schema::dropIfExists('beasiswa_pendidikan');
+        Schema::dropIfExists('pendidikans');
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('pendidikan');
+        // (optional) You can recreate the tables here if needed
     }
+
+
 };

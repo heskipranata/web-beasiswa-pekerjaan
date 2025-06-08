@@ -10,6 +10,7 @@ class AdminSeeder extends Seeder
 {
     public function run()
     {
+        User::query()->delete();
         User::updateOrCreate(
             ['email' => 'admin@example.com'],
             [

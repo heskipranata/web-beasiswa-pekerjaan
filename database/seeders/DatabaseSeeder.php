@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
     {
        $this->call(BeasiswaSeeder::class);
        $this->call(LowonganKerjaSeeder::class);
+       $this->call(AdminSeeder::class);
     }
 }

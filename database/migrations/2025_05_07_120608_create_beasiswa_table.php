@@ -11,16 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('beasiswas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->text('deskripsi');
-            $table->json('tingkats')->nullable(); 
-            $table->date('deadline')->nullable();
-            $table->string('link')->nullable();
-            $table->string('gambar')->nullable();
-            $table->timestamps();
-        });
+    
         
         
     }
