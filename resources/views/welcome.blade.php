@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Vite (Bootstrap & Custom Styles) -->
-    @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/app.js', 'resource/js/script.js'])
+    @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/app.js', 'resources/js/script.js'])
 
     <style>
         body {
