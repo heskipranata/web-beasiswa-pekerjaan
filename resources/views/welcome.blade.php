@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ScholarJob | Beasiswa - Pekerjaan</title>
 
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Vite (Bootstrap & Custom Styles) -->
     @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/app.js', 'resources/js/script.js'])
 
     <style>
@@ -21,12 +19,9 @@
 </head>
 
 <body>
-    {{-- Navbar --}}
     @include('partials.navbar')
 
-    {{-- Section utama --}}
     <main>
-        <!-- Home Section -->
         <section id="home"
             class="position-relative min-vh-100 d-flex align-items-center justify-content-md-center text-white text-center"
             style="
@@ -52,7 +47,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="py-5 bg-gray text-center">
             <div class="container mt-5">
                 <h2 class="text-primary fw-bold display-6">
@@ -94,9 +88,7 @@
                 </div>
             </div>
         </section>
-        <!-- About Section -->
 
-        <!-- Beasiswa Section  -->
         <section id="beasiswa" class="py-5 bg-primary text-white">
             <div class="container py-5">
                 <div class="row align-items-center">
@@ -118,9 +110,7 @@
                 </div>
             </div>
         </section>
-        <!-- Beasiswa Section  -->
 
-        <!-- Lowongan Pekerjaan -->
         <section id="lowongan" class="py-5 bg-light">
             <div class="container py-5">
                 <div class="row align-items-center">
@@ -145,7 +135,6 @@
                 </div>
             </div>
         </section>
-        <!-- Lowongan Pekerjaan -->
 
         <!-- Kontak Section  -->
         <section id="kontak" class="position-relative bg-dark text-white py-5"

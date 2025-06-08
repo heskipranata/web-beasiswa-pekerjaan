@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ScholarJob | Beasiswa - Pekerjaan</title>
 
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Vite (Bootstrap & Custom Styles) -->
-    @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/app.js', 'resource/js/script.js'])
+    @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/app.js', 'resources/js/script.js'])
 
     <style>
         body {
@@ -21,25 +19,24 @@
 </head>
 
 <body>
-    {{-- Navbar --}}
     @include('partials.navbar')
 
-    {{-- Section utama --}}
     <div class="container top-spacing-md mb-5">
         <h2 class="display-4 fw-bold text-center mb-3">Lowongan Kerja 💼 Terbaru</h2>
         <p class="text-center mb-5">
             Kesempatan kerja, magang, dan freelance untuk pelajar dan mahasiswa UNSRAT dan sekitarnya.
         </p>
-    
+
         <div class="row justify-content-center mb-4">
             <div class="col-md-8 col-lg-6">
                 <div class="input-group shadow-sm">
-                    <input type="text" class="form-control" placeholder="Cari pekerjaan berdasarkan judul, jenis, atau lokasi..." />
+                    <input type="text" class="form-control"
+                        placeholder="Cari pekerjaan berdasarkan judul, jenis, atau lokasi..." />
                     <button class="btn btn-primary" type="button"><i class="bi bi-search"></i></button>
                 </div>
             </div>
         </div>
-    
+
         <div class="row g-4 pt-4">
             @foreach ($pekerjaans as $job)
                 <div class="col-md-6 col-lg-4">
@@ -65,7 +62,7 @@
                 </div>
             @endforeach
         </div>
-        
+
     </div>
     @include('partials.footer')
 </body>
