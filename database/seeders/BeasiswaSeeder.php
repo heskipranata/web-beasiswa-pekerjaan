@@ -18,7 +18,7 @@ class BeasiswaSeeder extends Seeder
                 'deadline' => null,
                 'deskripsi' => 'Beasiswa Van Deventer-Maas Indonesia...',
                 'link' => 'https://vandeventermaas.or.id/id/beasiswa/',
-                'gambar' => asset('assets/images/vdv.png'),
+                'gambar' => 'https://vandeventermaas.or.id/wp-content/uploads/2016/05/vdms_logo_bw.png',
             ],
             [
                 'nama' => 'Beasiswa Glow & Lovely 2025',
