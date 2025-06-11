@@ -9,6 +9,7 @@ class LowonganKerjaSeeder extends Seeder
 {
     public function run(): void
     {
+        LowonganKerja::query()->delete();
         LowonganKerja::create([
             'judul' => 'Staf IT BCA Manado',
             'jenis' => 'Magang',

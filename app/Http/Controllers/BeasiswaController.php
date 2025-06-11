@@ -39,14 +39,16 @@ class BeasiswaController extends Controller
             'gambar_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        // Proses gambar
         $gambar = null;
-
         if ($request->hasFile('gambar_file')) {
-            $gambar = $request->file('gambar_file')->store('beasiswa_images', 'public');
+            $gambarPath = $request->file('gambar_file')->store('beasiswa_images', 'public');
+            $gambar = 'storage/' . $gambarPath;
         } elseif ($request->filled('gambar_link')) {
             $gambar = $request->input('gambar_link');
         }
 
+        // Simpan data
         Beasiswa::create([
             'nama' => $validated['nama'],
             'tingkats' => json_encode($validated['tingkats']),
@@ -58,6 +60,7 @@ class BeasiswaController extends Controller
 
         return redirect()->back()->with('success', 'Beasiswa berhasil ditambahkan.');
     }
+
     public function update(Request $request, $id)
     {
         $beasiswa = Beasiswa::findOrFail($id);

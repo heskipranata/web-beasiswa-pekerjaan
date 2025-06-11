@@ -109,11 +109,12 @@
         </div>
     </section>
 
-    <div class="modal fade" id="tambahBeasiswaModal" tabindex="-1" aria-labelledby="tambahBeasiswaLabel"
-        aria-hidden="true">
+    <!-- Modal Tambah Beasiswa -->
+    <div class="modal fade @if ($errors->any()) show d-block @endif" id="tambahBeasiswaModal"
+        tabindex="-1" aria-labelledby="tambahBeasiswaLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content border-0 shadow-sm">
-                <form action="{{ route('beasiswa.store') }}" method="POST" enctype="multipart/form-data" novalidate>
+                <form action="{{ route('beasiswa.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="modal-header bg-primary text-white">
@@ -125,105 +126,79 @@
                     </div>
 
                     <div class="modal-body mx-2">
+                        {{-- Error display --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
-                        <div class="mb-4">
-                            <label for="judulBeasiswa" class="form-label fw-semibold text-success">Judul Beasiswa <span
+                        <div class="mb-3">
+                            <label for="judulBeasiswa" class="form-label">Judul Beasiswa <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="judulBeasiswa" name="nama"
-                                placeholder="Masukkan judul beasiswa" required>
-                            <div class="invalid-feedback">Judul beasiswa wajib diisi.</div>
-                        </div>
-
-                        <fieldset class="mb-4">
-                            <p class="form-label fw-semibold mb-2 text-success">Jenjang <span
-                                    class="text-danger">*</span>
-                            </p>
-                            <div class="d-flex flex-wrap gap-3">
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="jenjangSMA" name="tingkats[]"
-                                        value="SMA">
-                                    <label class="form-check-label" for="jenjangSMA">SMA</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="jenjangD3" name="tingkats[]"
-                                        value="D3">
-                                    <label class="form-check-label" for="jenjangD3">D3</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="jenjangS1" name="tingkats[]"
-                                        value="S1">
-                                    <label class="form-check-label" for="jenjangS1">Sarjana-1</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="jenjangS2" name="tingkats[]"
-                                        value="S2">
-                                    <label class="form-check-label" for="jenjangS2">Magister</label>
-                                </div>
-
-
-                            </div>
-                            <div class="invalid-feedback d-block" id="tingkatsFeedback" style="display:none;">Pilih
-                                minimal satu jenjang.</div>
-                        </fieldset>
-
-                        <div class="mb-4">
-                            <label for="deadlineBeasiswa" class="form-label fw-semibold text-success">Deadline</label>
-                            <input type="date" class="form-control" id="deadlineBeasiswa" name="deadline"
-                                required>
-                            <div class="invalid-feedback">Deadline wajib diisi dan harus berupa tanggal yang valid.
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="deskripsiBeasiswa" class="form-label fw-semibold text-success">Deskripsi <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="deskripsiBeasiswa" name="deskripsi" rows="4"
-                                placeholder="Deskripsikan beasiswa secara singkat" required></textarea>
-                            <div class="invalid-feedback">Deskripsi wajib diisi.</div>
-                        </div>
-
-                        <div class="mb-4 p-3 bg-light rounded-3 border">
-                            <h6 class="fw-semibold mb-3 text-success">Gambar (Opsional)</h6>
-
-                            <div class="mb-3">
-                                <label for="gambarLink" class="form-label">Link Gambar</label>
-                                <input type="url" class="form-control" id="gambarLink" name="gambar_link"
-                                    placeholder="https://contoh.com/image.jpg">
-                            </div>
-
-                            <div class="mb-0">
-                                <label for="gambarUpload" class="form-label">Upload Gambar</label>
-                                <input type="file" class="form-control" id="gambarUpload" name="gambar_file"
-                                    accept="image/*">
-                            </div>
-
-                            <small class="text-muted fst-italic mt-2 d-block">Anda dapat mengisi salah satu dari link
-                                atau upload gambar.</small>
+                                value="{{ old('nama') }}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="linkBeasiswa" class="form-label fw-semibold text-success">Link
-                                Selengkapnya</label>
-                            <input type="url" class="form-control" id="linkBeasiswa" name="link"
-                                placeholder="https://contoh.com">
+                            <label class="form-label">Jenjang <span class="text-danger">*</span></label>
+                            <div class="d-flex flex-wrap gap-3">
+                                @foreach (['SMA', 'D3', 'S1', 'Magister'] as $jenjang)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="tingkats[]"
+                                            value="{{ $jenjang }}"
+                                            {{ is_array(old('tingkats')) && in_array($jenjang, old('tingkats')) ? 'checked' : '' }}>
+                                        <label class="form-check-label">{{ $jenjang }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="deadlineBeasiswa" class="form-label">Deadline <span
+                                    class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="deadlineBeasiswa" name="deadline"
+                                value="{{ old('deadline') }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="deskripsiBeasiswa" class="form-label">Deskripsi <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" name="deskripsi" rows="4" required>{{ old('deskripsi') }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="linkBeasiswa" class="form-label">Link Selengkapnya</label>
+                            <input type="url" class="form-control" name="link" value="{{ old('link') }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="gambarLink" class="form-label">Link Gambar</label>
+                            <input type="url" class="form-control" name="gambar_link"
+                                value="{{ old('gambar_link') }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="gambarUpload" class="form-label">Upload Gambar</label>
+                            <input type="file" class="form-control" name="gambar_file" accept="image/*">
+                        </div>
+
+                        <small class="text-muted">Pilih salah satu: upload file atau masukkan link gambar</small>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary"
-                            data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary px-4">Simpan</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
+
 
     @foreach ($beasiswas as $beasiswa)
         @include('partials.edit-modal', ['beasiswa' => $beasiswa])
